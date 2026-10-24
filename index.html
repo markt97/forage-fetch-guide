@@ -332,16 +332,31 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
         <div>
           <p>Your shopping list. Each item shows the recipe it came from, and the badge on the tab shows how many items are on it. If an ingredient is already on the list, the picker tells you.</p>
           <ul>
-            <li>Tick items off as you shop. Remove one by swiping it, or clear everything you've ticked with the trash button.</li>
-            <li><span class="ui">Add to Reminders</span> copies the items into an Apple Reminders list (pick it in Settings). Afterwards you choose whether to remove them from the Forage List or keep them.</li>
-            <li><span class="ui">Add to Target</span> lets you pick items, then saves them as an image to Photos. In the Target app, use its add-from-photo option to bring the items into your Target list. Long lists are split into several images.</li>
-            <li><span class="ui">Share</span> sends the list as text to Messages, Notes or anywhere else.</li>
+            <li>Tick items as you shop. Remove one by swiping it, or clear everything you've ticked with the trash button.</li>
+            <li>The buttons at the bottom of the list work on the items you've ticked, and show how many that is.</li>
           </ul>
         </div>
         <figure class="shot phone"><img src="img/forage.jpg" alt="Forage List with ticked items from Sweet Potato Tacos and Skillet Pierogi" loading="lazy"><figcaption>Items from two recipes</figcaption></figure>
       </div>
-      <div class="shots">
-        <figure class="shot phone"><img src="img/target.jpg" alt="Add to Target picker with 24 of 24 items selected" loading="lazy"><figcaption>Add to Target</figcaption></figure>
+      <div class="split">
+        <div>
+          <h3>Send to Apple Reminders</h3>
+          <ol>
+            <li>The first time, go to <span class="ui">Settings</span>, tap <span class="ui">Connect Reminders</span> and allow access. Then choose a <span class="ui">Default Reminders List</span>, such as your grocery list.</li>
+            <li>On the Forage List, tick the items you want to send.</li>
+            <li>Check the <span class="ui">Reminders List</span> at the bottom. You can switch to a different list just for this send.</li>
+            <li>Tap <span class="ui">Add 2 to Reminders</span> (the number matches what you ticked).</li>
+            <li>The app then asks whether to remove those items from the Forage List or keep them. Either way they're now in Reminders, and they sync to your other Apple devices and anyone you share that list with.</li>
+          </ol>
+          <h3>Send to Target</h3>
+          <p><span class="ui">Add to Target</span> opens a picker, then saves the items you choose as an image in Photos. In the Target app, use its add-from-photo option to bring the items into your Target list. Long lists are split into several images.</p>
+          <h3>Share</h3>
+          <p><span class="ui">Share</span> sends the ticked items as text to Messages, Notes or anywhere else.</p>
+        </div>
+        <div class="shots" style="flex-direction:column">
+          <figure class="shot phone"><img src="img/forage-send.jpg" alt="Bottom of the Forage List with Add 2 to Reminders, the Reminders List picker, Add 2 to Target and Share 2 Items" loading="lazy"><figcaption>Sending two ticked items</figcaption></figure>
+          <figure class="shot phone"><img src="img/target.jpg" alt="Add to Target picker with 24 of 24 items selected" loading="lazy"><figcaption>Add to Target</figcaption></figure>
+        </div>
       </div>
     </section>
 
@@ -406,7 +421,7 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
         <li><input type="checkbox" id="t2"><label for="t2">Dictate a recipe you know by heart. How close was the result, and what did you have to fix?</label></li>
         <li><input type="checkbox" id="t3"><label for="t3">Scan a page from a cookbook or a handwritten card.</label></li>
         <li><input type="checkbox" id="t4"><label for="t4">Import an Instagram recipe post or reel.</label></li>
-        <li><input type="checkbox" id="t5"><label for="t5">Add ingredients from two recipes to the Forage List, then shop from it (or send it to Reminders or Target).</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5">Add ingredients from two recipes to the Forage List, then shop from it. Try sending a few items to Reminders or Target too.</label></li>
         <li><input type="checkbox" id="t6"><label for="t6">Cook something with cook mode and a step timer. Did the timer go off when you expected?</label></li>
         <li><input type="checkbox" id="t7"><label for="t7">Change the servings. Do the new amounts make sense?</label></li>
         <li><input type="checkbox" id="t8"><label for="t8">If you have a second device, check your recipes and list show up there too.</label></li>
