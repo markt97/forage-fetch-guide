@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Forage &amp; Fetch Tester Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: a field guide. Contents rail on wide screens, one reading column, screenshots set beside the text they illustrate. Colors from the app's brand guide. */
+:root {
+  --bg: #F9F4EA;          /* Warm Cream */
+  --surface: #FFFDF8;
+  --ink: #1E2D20;         /* Ink Green */
+  --muted: #56604F;
+  --brand: #32442C;       /* Heritage Green */
+  --leaf: #5F7539;        /* Leaf Olive */
+  --line: #DDD5C3;
+  --tint: #EEF0E2;
+  --flag-bg: #FBEBC8;
+  --flag-ink: #6A4A0C;
+  --on-brand: #F9F4EA;
+  --display: "Libre Baskerville", Georgia, "Times New Roman", serif;
+  --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #172219; --surface: #1E2D20; --ink: #ECE8DC; --muted: #AEB6A4;
+    --brand: #8FB36B; --leaf: #A9C487; --line: #34463A; --tint: #24362A;
+    --flag-bg: #3A3018; --flag-ink: #F0D597; --on-brand: #1E2D20;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #172219; --surface: #1E2D20; --ink: #ECE8DC; --muted: #AEB6A4;
+  --brand: #8FB36B; --leaf: #A9C487; --line: #34463A; --tint: #24362A;
+  --flag-bg: #3A3018; --flag-ink: #F0D597; --on-brand: #1E2D20;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+a { color: var(--brand); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; line-height: 1.25; margin: 0; }
+h2 { font-size: 1.6rem; color: var(--brand); }
+h3 { font-size: 1.12rem; }
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 1.25em; display: grid; gap: 6px; }
+kbd, .ui { font-family: var(--body); font-weight: 600; white-space: nowrap; }
+.ui { color: var(--brand); }
+kbd { border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; font-size: .88em; background: var(--surface); }
+
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; }
+@media (max-width: 880px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; } nav.toc { display: none; } }
+
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 56px; font-size: .9rem; }
+nav.toc p { text-transform: uppercase; letter-spacing: .1em; font-size: .72rem; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+nav.toc ol { list-style: none; padding: 0; gap: 2px; }
+nav.toc a { display: block; padding: 4px 10px; border-radius: 6px; text-decoration: none; color: var(--ink); }
+nav.toc a:hover { background: var(--tint); }
+
+main { min-width: 0; display: grid; gap: 64px; }
+
+header.hero { padding-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: center; }
+@media (max-width: 640px) { header.hero { grid-template-columns: minmax(0, 1fr); padding-top: 32px; } }
+.mark { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.mark svg { width: 44px; height: 44px; flex: none; }
+.mark span { text-transform: uppercase; letter-spacing: .16em; font-size: .74rem; font-weight: 600; color: var(--leaf); }
+header.hero h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); color: var(--brand); }
+header.hero h1 em { font-style: italic; font-weight: 400; color: var(--leaf); }
+.lede { font-size: 1.15rem; color: var(--muted); max-width: 34em; margin-top: 16px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.chip { font-size: .8rem; font-weight: 500; padding: 4px 10px; border-radius: 99px; background: var(--tint); color: var(--brand); }
+
+section { display: grid; gap: 20px; scroll-margin-top: 24px; }
+section > p, .prose { max-width: 40em; }
+.eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; font-weight: 600; color: var(--leaf); }
+.head { display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 28px; }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 32px; align-items: start; }
+.split.wide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 640px) { .split, .split.wide { grid-template-columns: minmax(0, 1fr); } .split .shot.phone { max-width: 220px; } }
+.split > div { min-width: 0; display: grid; gap: 14px; }
+
+.shots { display: flex; flex-wrap: wrap; gap: 20px; }
+.shots .shot.phone { width: 190px; }
+
+/* Screenshot placeholders. Replace the inner .frame with an <img> once screenshots arrive. */
+figure.shot { margin: 0; display: grid; gap: 8px; max-width: 100%; }
+.frame {
+  border: 2px dashed var(--line); border-radius: 26px; background: var(--surface);
+  display: grid; place-items: center; text-align: center; padding: 14px;
+  color: var(--muted); font-size: .8rem; line-height: 1.4; max-width: 100%;
+}
+.phone .frame { aspect-ratio: 9 / 19.5; }
+.tablet .frame { aspect-ratio: 4 / 3; border-radius: 18px; }
+.desktop .frame { aspect-ratio: 16 / 10; border-radius: 12px; }
+.frame b { display: block; font-family: var(--display); font-size: 1.6rem; color: var(--leaf); margin-bottom: 6px; }
+figure.shot img { display: block; width: 100%; height: auto; border-radius: 22px; border: 1px solid var(--line); }
+.tablet img, .desktop img { border-radius: 12px; }
+figcaption { font-size: .8rem; color: var(--muted); }
+
+.ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.way { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.way h3 { font-size: 1rem; }
+.way p { font-size: .93rem; color: var(--muted); }
+.way .how { font-size: .85rem; color: var(--ink); }
+
+.tip { background: var(--tint); border-radius: 10px; padding: 14px 16px; font-size: .93rem; max-width: 40em; }
+.tip strong { color: var(--brand); }
+
+.todo { background: var(--flag-bg); color: var(--flag-ink); border-radius: 10px; padding: 14px 16px; font-size: .93rem; max-width: 40em; border: 1px dashed currentColor; }
+.todo strong { text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; display: block; margin-bottom: 4px; }
+
+.req { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.req div { border-left: 3px solid var(--leaf); padding: 2px 0 2px 14px; display: grid; gap: 4px; }
+.req h3 { font-size: .98rem; }
+.req p { font-size: .92rem; color: var(--muted); }
+
+.siri { display: grid; gap: 8px; }
+.siri li { list-style: none; }
+.siri { padding: 0; }
+.say { font-family: var(--display); font-style: italic; }
+
+.tests { counter-reset: t; list-style: none; padding: 0; display: grid; gap: 10px; max-width: 44em; }
+.tests li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; }
+.tests input { width: 18px; height: 18px; margin-top: 4px; accent-color: var(--brand); }
+
+.limits li { max-width: 42em; }
+footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 20px; }
+</style>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Contents">
+    <p>In this guide</p>
+    <ol>
+      <li><a href="#start">Getting set up</a></li>
+      <li><a href="#tour">The app at a glance</a></li>
+      <li><a href="#add">Adding recipes</a></li>
+      <li><a href="#review">Reviewing a new recipe</a></li>
+      <li><a href="#recipe">The recipe page</a></li>
+      <li><a href="#cook">Cook mode</a></li>
+      <li><a href="#list">The Forage List</a></li>
+      <li><a href="#siri">Siri, Spotlight and widgets</a></li>
+      <li><a href="#devices">iPad, Mac and foldables</a></li>
+      <li><a href="#sync">Sync and privacy</a></li>
+      <li><a href="#limits">Known limitations</a></li>
+      <li><a href="#test">What to try</a></li>
+      <li><a href="#feedback">Sending feedback</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div>
+        <div class="mark">
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <rect width="44" height="44" rx="10" fill="var(--brand)"/>
+            <path d="M12 18h20l-2 16H14z" fill="none" stroke="var(--on-brand)" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M17 18c0-4 2-7 5-7s5 3 5 7" fill="none" stroke="var(--on-brand)" stroke-width="2.2"/>
+            <path d="M22 31c-3-2-3-6 0-9 3 3 3 7 0 9z" fill="var(--on-brand)"/>
+          </svg>
+          <span>Beta tester guide</span>
+        </div>
+        <h1>Forage &amp; Fetch, <em>from recipe to shopping list</em></h1>
+        <p class="lede">Save a recipe from anywhere, even by talking it through out loud. Cook from it step by step, and send the ingredients you need to your shopping list. This guide covers everything in the current test build and what we'd like you to try.</p>
+        <div class="meta">
+          <span class="chip">iPhone</span><span class="chip">iPad</span><span class="chip">Mac</span>
+          <span class="chip">Version 1.3.1 (beta)</span>
+        </div>
+      </div>
+      <figure class="shot phone" style="width:200px"><img src="img/recipes.jpg" alt="The Recipes tab listing saved recipes with photos" loading="lazy"><figcaption>Your saved recipes</figcaption></figure>
+    </header>
+
+    <section id="start">
+      <div class="head"><span class="eyebrow">Before you begin</span><h2>Getting set up</h2></div>
+      <div class="req">
+        <div><h3>An iPhone or iPad</h3><p>iOS or iPadOS 17 or later runs the app. iOS 26 or later gets the newest dictation and ringing step timers.</p></div>
+        <div><h3>Apple Intelligence (recommended)</h3><p>Turning spoken or pasted recipes into tidy steps runs on your device with Apple Intelligence. Without it the app still works, but the cleanup is simpler.</p></div>
+        <div><h3>Signed in to iCloud</h3><p>Recipes, photos and your Forage List sync through your own private iCloud. There is no separate account to create.</p></div>
+        <div><h3>A Mac (optional)</h3><p>The same app runs on a Mac with the iPad layout, plus menus and keyboard shortcuts.</p></div>
+      </div>
+      <h3>Installing with TestFlight</h3>
+      <ol class="prose">
+        <li>Install Apple's free <strong>TestFlight</strong> app from the App Store on your iPhone or iPad.</li>
+        <li>Open the invitation from Mark (an email or a link) on that device and tap <span class="ui">View in TestFlight</span> or <span class="ui">Accept</span>.</li>
+        <li>In TestFlight, tap <span class="ui">Install</span> next to Forage &amp; Fetch. It then appears on your Home Screen like any other app.</li>
+        <li>When a new build is ready, TestFlight lets you know. Tap <span class="ui">Update</span> to get it.</li>
+      </ol>
+      <p class="prose">If you haven't had an invitation yet, send Mark the email address you use for your Apple Account.</p>
+      <p class="prose">The first time you open the app, it may ask for permission to use the microphone and speech recognition (for dictation), Reminders (if you send items there), notifications and alarms (for step timers), and Photos (when you save a shopping list image or add a recipe photo). Each one is only asked when you first use that feature.</p>
+    </section>
+
+    <section id="tour">
+      <div class="head"><span class="eyebrow">Orientation</span><h2>The app at a glance</h2></div>
+      <div class="split">
+        <div>
+          <p>There are three tabs along the bottom.</p>
+          <ul>
+            <li><span class="ui">Recipes</span> holds every recipe you've saved. Search at the top, sort by <span class="ui">Date Added</span> or <span class="ui">Recently Opened</span>, and tap <span class="ui">+</span> to add one. Tapping the Recipes tab again takes you back to the list.</li>
+            <li><span class="ui">Forage List</span> is your shopping list. Ingredients from any recipe land here, grouped by recipe.</li>
+            <li><span class="ui">Settings</span> connects Apple Reminders and chooses your default Reminders list.</li>
+          </ul>
+          <p>The name comes from the idea: you forage for recipes, then fetch what you need.</p>
+        </div>
+        <figure class="shot phone"><img src="img/add.jpg" alt="Add Recipe menu with Create Recipe, Paste Recipe, Speak Recipe, Recipe URL and Scan Recipe Page" loading="lazy"><figcaption>Tap + to add a recipe</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="add">
+      <div class="head"><span class="eyebrow">Step one</span><h2>Adding recipes</h2></div>
+      <p>There are six ways to get a recipe in. Tap <span class="ui">+</span> on the Recipes tab to see most of them, or share straight from another app.</p>
+      <div class="ways">
+        <div class="way">
+          <h3>Share from Safari or another app</h3>
+          <p>On any recipe website, tap the Share button and choose Forage &amp; Fetch. You'll see "Saved to Forage &amp; Fetch", and the recipe appears when you next open the app.</p>
+          <p class="how">You may need to tap <span class="ui">More</span> in the share sheet once to add Forage &amp; Fetch to your favourites.</p>
+        </div>
+        <div class="way">
+          <h3>Recipe URL</h3>
+          <p>Paste a web address into <span class="ui">+ › Recipe URL</span>. Works with most recipe sites. If a page has no standard recipe format, the app reads the recipe text on the page instead.</p>
+        </div>
+        <div class="way">
+          <h3>Instagram posts and reels</h3>
+          <p>Share a post or reel to the app, or paste its link. It looks for the creator's own recipe page (the site in the caption, or links in their bio) and falls back to the caption.</p>
+          <p class="how">If the recipe is only spoken in the video, the import will say so. Video isn't transcribed yet.</p>
+        </div>
+        <div class="way">
+          <h3>Speak Recipe</h3>
+          <p>Tap <span class="ui">Start Recording</span> and talk through the recipe the way you'd tell a friend: what goes in, how much, and what to do. Pause any time. Tap <span class="ui">Use Transcript</span> and the app writes it up as ingredients and numbered steps.</p>
+        </div>
+        <div class="way">
+          <h3>Paste Recipe</h3>
+          <p>Copy recipe text from anywhere (a note, an email, a message) and paste it in. If the text already has an Instructions heading, the steps are kept word for word.</p>
+        </div>
+        <div class="way">
+          <h3>Scan Recipe Page</h3>
+          <p>Photograph a cookbook or recipe card with <span class="ui">Scan Pages</span>, or pick up to four photos you already have. The text is read on your device, and you can check it before it becomes a recipe.</p>
+        </div>
+      </div>
+      <p class="prose">You can also tap <span class="ui">Create Recipe</span> to type one in by hand.</p>
+      <div class="shots">
+        <figure class="shot phone"><img src="img/share.jpg" alt="Safari share sheet with Forage &amp; Fetch in the app row" loading="lazy"><figcaption>Sharing from Safari</figcaption></figure>
+        <figure class="shot phone"><img src="img/speak.jpg" alt="Speak Recipe screen while recording" loading="lazy"><figcaption>Speak Recipe, recording</figcaption></figure>
+        <figure class="shot phone"><img src="img/scan.jpg" alt="Scan Recipe screen with Scan Pages and Choose Photos of Pages" loading="lazy"><figcaption>Scan Recipe</figcaption></figure>
+        <figure class="shot phone"><img src="img/paste.jpg" alt="Paste Recipe screen with cookbook text pasted in" loading="lazy"><figcaption>Paste Recipe</figcaption></figure>
+      </div>
+      <div class="tip"><strong>Tip for dictation.</strong> Say amounts clearly ("two cans of black beans", "a tablespoon of cumin"). Vague amounts like "a splash" or "a big handful" are kept exactly as you said them rather than guessed.</div>
+    </section>
+
+    <section id="review">
+      <div class="head"><span class="eyebrow">Step two</span><h2>Reviewing a new recipe</h2></div>
+      <div class="split wide">
+        <div>
+          <p>Spoken, pasted and scanned recipes open on a <span class="ui">Review Recipe</span> screen before they're saved. Everything is editable: title, servings, prep and cook time, ingredients (one per line), steps and notes.</p>
+          <ul>
+            <li><span class="ui">Check These Ingredients</span> lists anything the app wasn't sure about, such as an ingredient with no amount. Tap one to fix it, or swipe to keep it as is.</li>
+            <li>A step starting with <strong>"Check:"</strong> is one the app couldn't fully match to what you said. Read it and fix or keep it.</li>
+            <li>To keep ingredient groups like "For the sauce", put the group name in square brackets on its own line: <code>[For the sauce]</code>.</li>
+          </ul>
+        </div>
+        <div class="shots"><figure class="shot phone" style="width:170px"><img src="img/review.jpg" alt="Review Recipe screen with Check These Ingredients" loading="lazy"><figcaption>Check These Ingredients</figcaption></figure><figure class="shot phone" style="width:170px"><img src="img/fix.jpg" alt="Fix Ingredient dialog with Save, Keep As Is and Remove" loading="lazy"><figcaption>Tap one to fix it</figcaption></figure></div>
+      </div>
+    </section>
+
+    <section id="recipe">
+      <div class="head"><span class="eyebrow">Day to day</span><h2>The recipe page</h2></div>
+      <div class="split">
+        <div>
+          <p>Open any recipe to see its photo, ingredients and then the instructions. The buttons along the top, from left to right:</p>
+          <ul>
+            <li><strong>Cart</strong> adds ingredients to your Forage List. A picker opens with every ingredient selected. Untick what you already have and tap the <span class="ui">Add Items to Forage List</span> button, which shows how many you picked.</li>
+            <li><strong>Share</strong> sends the recipe's link to Messages, Notes or anywhere else.</li>
+            <li><strong>Pencil</strong> opens the editor for every part of the recipe.</li>
+            <li><strong>Pan</strong> starts cook mode. On iPad and Mac there's also a <span class="ui">Cook</span> button beside Instructions.</li>
+          </ul>
+          <p>The tick boxes next to each ingredient mean "I've gathered this for cooking", and the count shows how many you've gathered. They're just for you while you prep, are kept on that device, and don't change your Forage List.</p>
+          <p>Further down the page, the <span class="ui">Send ingredients</span> section has <span class="ui">Add to Reminders</span>, <span class="ui">Add to Target</span> and <span class="ui">Share Ingredients</span>, for sending a recipe's ingredients straight out without using the Forage List.</p>
+        </div>
+        <figure class="shot phone"><img src="img/recipe.jpg" alt="Top of a recipe page with photo, title and buttons" loading="lazy"><figcaption>A recipe page</figcaption></figure>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Servings</h3>
+          <p>Use <span class="ui">−</span> and <span class="ui">+</span> next to "1× recipe" to scale a recipe down or up. Amounts at the start of each ingredient line change. Things like "a pinch" or "to taste", and amounts mentioned inside the steps, stay as written, and lines that can't be scaled say <span class="ui">Not scaled</span>.</p>
+          <h3>Photos</h3>
+          <p>Tap the photo (or the space for one) to take a photo, choose one from your library, paste an image link, or go back to the original. On devices with Image Playground you can also <span class="ui">Create Image</span> for recipes that don't have one, which is handy for dictated recipes.</p>
+          <h3>Look up an ingredient</h3>
+          <p>Touch and hold any ingredient for <span class="ui">Search on Target</span> or <span class="ui">Search on Web</span>.</p>
+          <h3>Getting back</h3>
+          <p>On iPhone, swipe from the left edge or tap the back arrow to return to your recipes.</p>
+        </div>
+        <div class="shots" style="flex-direction:column"><figure class="shot phone"><img src="img/scaled.jpg" alt="Ingredients doubled to 2× with two ticked as gathered" loading="lazy"><figcaption>Doubled, with two gathered</figcaption></figure><figure class="shot phone"><img src="img/picker.jpg" alt="Add to Forage List picker with all 11 ingredients selected" loading="lazy"><figcaption>Adding to the Forage List</figcaption></figure></div>
+      </div>
+    </section>
+
+    <section id="cook">
+      <div class="head"><span class="eyebrow">At the stove</span><h2>Cook mode</h2></div>
+      <div class="split">
+        <div>
+          <p>Cook mode shows one step at a time in large type, with a progress bar along the top. Tap <span class="ui">Next</span> or <span class="ui">Back</span>, or swipe, to move between steps. The list button at the top right shows all the ingredients.</p>
+          <ul>
+            <li><span class="ui">For this step</span> lists just the ingredients that step uses, so you don't have to scroll back.</li>
+            <li>When a step mentions a time ("simmer for 20 minutes"), a timer button appears under the step (for example <span class="ui">5 min</span>). Tap it to start. On iOS 26 and later the timer rings like an alarm, even on silent. Earlier versions use a notification.</li>
+            <li>A Live Activity on the Lock Screen and Dynamic Island shows which step you're on and any running timer.</li>
+          </ul>
+          <div class="tip"><strong>About HomeView.</strong> Settings has a <span class="ui">Share to HomeView</span> switch. It's an experiment that needs a server running on a Mac at home, so leave it off. If you ever see a "Share to HomeView?" question when you tap Cook, choose <span class="ui">Cook on iPhone</span> (or iPad).</div>
+        </div>
+        <figure class="shot phone"><img src="img/cook.jpg" alt="Cook mode on step 1 with 5 min and 1 min timer buttons and the ingredients for this step" loading="lazy"><figcaption>Step 1 with two timers</figcaption></figure>
+      </div>
+      <div class="shots">
+        <figure class="shot phone"><img src="img/lock-step.jpg" alt="Lock Screen Live Activity showing Step 1 of 3" loading="lazy"><figcaption>Your current step on the Lock Screen</figcaption></figure>
+        <figure class="shot phone"><img src="img/lock-timer.jpg" alt="Lock Screen timer counting down 4:53 for Step 1" loading="lazy"><figcaption>A step timer counting down</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="list">
+      <div class="head"><span class="eyebrow">At the store</span><h2>The Forage List</h2></div>
+      <div class="split">
+        <div>
+          <p>Your shopping list. Each item shows the recipe it came from, and the badge on the tab shows how many items are on it. If an ingredient is already on the list, the picker tells you.</p>
+          <ul>
+            <li>Tick items off as you shop. Remove one by swiping it, or clear everything you've ticked with the trash button.</li>
+            <li><span class="ui">Add to Reminders</span> copies the items into an Apple Reminders list (pick it in Settings). Afterwards you choose whether to remove them from the Forage List or keep them.</li>
+            <li><span class="ui">Add to Target</span> lets you pick items, then saves them as an image to Photos. In the Target app, use its add-from-photo option to bring the items into your Target list. Long lists are split into several images.</li>
+            <li><span class="ui">Share</span> sends the list as text to Messages, Notes or anywhere else.</li>
+          </ul>
+        </div>
+        <figure class="shot phone"><img src="img/forage.jpg" alt="Forage List with ticked items from Sweet Potato Tacos and Skillet Pierogi" loading="lazy"><figcaption>Items from two recipes</figcaption></figure>
+      </div>
+      <div class="shots">
+        <figure class="shot phone"><img src="img/target.jpg" alt="Add to Target picker with 24 of 24 items selected" loading="lazy"><figcaption>Add to Target</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="siri">
+      <div class="head"><span class="eyebrow">Hands-free</span><h2>Siri, Spotlight and widgets</h2></div>
+      <div class="split">
+        <div>
+          <p>Your recipes show up in Spotlight search, so you can swipe down on the Home Screen and type a recipe name. You can also ask Siri:</p>
+          <ul class="siri">
+            <li class="say">"Open lentil stew in Forage &amp; Fetch"</li>
+            <li class="say">"Add this recipe to my Forage List in Forage &amp; Fetch"</li>
+            <li class="say">"What's on my Forage &amp; Fetch list"</li>
+            <li class="say">"Start cook mode in Forage &amp; Fetch"</li>
+          </ul>
+          <p>The same actions are in the Shortcuts app, so you can assign one to the Action Button in Settings.</p>
+          <h3>Forage List widget</h3>
+          <p>Add the Forage &amp; Fetch widget (small, medium or large) to your Home Screen to see what's left to buy. Tap an item in the widget to tick it off. Ticks stay in step with the app.</p>
+        </div>
+        <figure class="shot phone"><img src="img/widget.jpg" alt="Home Screen with the medium Forage List widget, one item left" loading="lazy"><figcaption>The medium widget</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="devices">
+      <div class="head"><span class="eyebrow">Bigger screens</span><h2>iPad, Mac and foldables</h2></div>
+      <div class="split wide">
+        <div>
+          <p><strong>iPad.</strong> The tabs move to the top, the recipe list sits beside the open recipe, and wide recipe pages show ingredients and steps side by side. Cook mode puts ingredients in a side panel in landscape.</p>
+          <p><strong>Mac.</strong> The Mac app looks like the iPad app and adds menus and keyboard shortcuts: <kbd>⌘N</kbd> for a new recipe, <kbd>⌘,</kbd> for Settings, arrow keys to move between steps in cook mode. On the Mac, Cook goes straight to cook mode, and timers use a regular notification.</p>
+          <p><strong>Foldable iPhone.</strong> When unfolded, the list and the recipe (or the Forage List) can sit side by side.</p>
+        </div>
+        <div class="shots">
+          <figure class="shot tablet" style="width:100%"><img src="img/ipad.jpg" alt="iPad in landscape with the recipe list beside Skillet Pierogi with Mushrooms" loading="lazy"><figcaption>iPad</figcaption></figure>
+          <figure class="shot desktop" style="width:100%"><img src="img/mac.jpg" alt="Mac app window with the recipe list beside Skillet Ravioli with Spinach" loading="lazy"><figcaption>Mac</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="sync">
+      <div class="head"><span class="eyebrow">Your data</span><h2>Sync and privacy</h2></div>
+      <p>Recipes, photos you add and your Forage List sync through your own private iCloud, so the same list is on your iPhone, iPad and Mac. There's no Forage &amp; Fetch account, no analytics and no ad tracking. Turning dictation and pasted text into recipes happens on your device with Apple Intelligence. Nothing is sent to a paid AI service.</p>
+      <p>Sync happens on its own. If something looks out of date, close and reopen the app; on the Mac there's also a <span class="ui">Sync Now</span> menu command.</p>
+    </section>
+
+    <section id="limits">
+      <div class="head"><span class="eyebrow">Good to know</span><h2>Known limitations</h2></div>
+      <ul class="limits">
+        <li>Instagram reels whose recipe is only spoken in the video can't be imported yet. Posts with the recipe in the caption, or a link to the creator's recipe page, work best.</li>
+        <li>Some websites block apps from reading them, or put the recipe behind a login. Paste Recipe is the fallback.</li>
+        <li>Dictation and scans can mishear or misread. Always glance at the Review screen, especially lines marked "Check:".</li>
+        <li>Scaling servings changes the recipe page only. Ingredients you add to the Forage List use the original amounts.</li>
+        <li>"Ingredients gathered" ticks on a recipe page stay on that one device.</li>
+        <li>Generated recipe images need a device with Image Playground. On iOS 27 you tap Create Image yourself; it doesn't happen automatically.</li>
+        <li>The "Share to HomeView" setting is an experiment for one specific home setup. Leave it off.</li>
+      </ul>
+    </section>
+
+    <section id="test">
+      <div class="head"><span class="eyebrow">Your mission</span><h2>What to try</h2></div>
+      <p>If you only have a few minutes, these are the things we most want to hear about. Tick them off as you go (ticks are saved only in your browser).</p>
+      <ol class="tests" id="tests">
+        <li><input type="checkbox" id="t1"><label for="t1">Share a recipe from a website you actually cook from. Did the ingredients and steps come through correctly?</label></li>
+        <li><input type="checkbox" id="t2"><label for="t2">Dictate a recipe you know by heart. How close was the result, and what did you have to fix?</label></li>
+        <li><input type="checkbox" id="t3"><label for="t3">Scan a page from a cookbook or a handwritten card.</label></li>
+        <li><input type="checkbox" id="t4"><label for="t4">Import an Instagram recipe post or reel.</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5">Add ingredients from two recipes to the Forage List, then shop from it (or send it to Reminders or Target).</label></li>
+        <li><input type="checkbox" id="t6"><label for="t6">Cook something with cook mode and a step timer. Did the timer go off when you expected?</label></li>
+        <li><input type="checkbox" id="t7"><label for="t7">Change the servings. Do the new amounts make sense?</label></li>
+        <li><input type="checkbox" id="t8"><label for="t8">If you have a second device, check your recipes and list show up there too.</label></li>
+        <li><input type="checkbox" id="t9"><label for="t9">Try the widget and a Siri phrase.</label></li>
+      </ol>
+    </section>
+
+    <section id="feedback">
+      <div class="head"><span class="eyebrow">Tell us</span><h2>Sending feedback</h2></div>
+      <p class="prose">Use whichever is easiest for you:</p>
+      <ul class="prose">
+        <li><strong>From TestFlight.</strong> Take a screenshot while using the app, tap <span class="ui">Share Beta Feedback</span>, add a note and send. You can also open TestFlight, choose Forage &amp; Fetch and tap <span class="ui">Send Beta Feedback</span>. If the app crashes, TestFlight will offer to send a report. Please say yes.</li>
+        <li><strong>By email or chat.</strong> Message Mark directly, the same way you usually reach him.</li>
+      </ul>
+      <p class="prose">The most useful reports include the recipe link or what you said, what you expected, what you got, and a screenshot. If an import goes wrong, keep the recipe in the app rather than deleting it so we can look at it together.</p>
+    </section>
+
+    <footer>Forage &amp; Fetch beta · Guide written for version 1.3.1 · October 2026</footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  var KEY = "ff-tester-checks";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+  document.querySelectorAll("#tests input").forEach(function (box) {
+    if (saved[box.id]) box.checked = true;
+    box.addEventListener("change", function () {
+      saved[box.id] = box.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</html>
