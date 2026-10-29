@@ -150,6 +150,7 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
       <li><a href="#tour">The app at a glance</a></li>
       <li><a href="#add">Adding recipes</a></li>
       <li><a href="#review">Reviewing a new recipe</a></li>
+      <li><a href="#browse">Browsing and tags</a></li>
       <li><a href="#recipe">The recipe page</a></li>
       <li><a href="#cook">Cook mode</a></li>
       <li><a href="#list">The Forage List</a></li>
@@ -211,7 +212,7 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
           <ul>
             <li><span class="ui">Recipes</span> holds every recipe you've saved. Search at the top, sort by <span class="ui">Date Added</span> or <span class="ui">Recently Opened</span>, and tap <span class="ui">+</span> to add one. Tapping the Recipes tab again takes you back to the list.</li>
             <li><span class="ui">Forage List</span> is your shopping list. Ingredients from any recipe land here, grouped by recipe.</li>
-            <li><span class="ui">Settings</span> connects Apple Reminders and chooses your default Reminders list.</li>
+            <li><span class="ui">Settings</span> holds the recipe list style, your tags, and the Apple Reminders connection and default list.</li>
           </ul>
           <p>The name comes from the idea: you forage for recipes, then fetch what you need.</p>
         </div>
@@ -275,11 +276,45 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
       </div>
     </section>
 
+    <section id="browse">
+      <div class="head"><span class="eyebrow">Finding things</span><h2>Browsing and tags</h2></div>
+      <div class="split">
+        <div>
+          <h3>Two ways to see your recipes</h3>
+          <p><span class="ui">Compact</span> is the default: a small photo beside each recipe's name, source and date. <span class="ui">Large Photos</span> shows each recipe as a big photo card with its name, total time and servings over the picture. Recipes without a photo get a green card.</p>
+          <p>Switch between them from the sort button (<span class="ui">↑↓</span>) at the bottom of the list, or in <span class="ui">Settings › Recipe List</span>. On the Mac it's in the View menu. Your choice is remembered.</p>
+          <h3>Search and sort</h3>
+          <p>The search field matches recipe names, ingredients and tags. The sort button switches between <span class="ui">Date Added</span> and <span class="ui">Recently Opened</span>.</p>
+        </div>
+        <figure class="shot phone"><div class="frame"><span><b>16</b>Recipes list in Large Photos</span></div></figure>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Tags</h3>
+          <p>Tags group recipes by <strong>meal</strong> (Dinner, Dessert), <strong>cuisine</strong> (Mexican, Italian), <strong>diet</strong> (Vegetarian) or <strong>occasion</strong> (Thanksgiving). They sit under the recipe's title.</p>
+          <ul>
+            <li>Tap <span class="ui">Add Tag</span> to pick a tag you already use, or choose <span class="ui">New Tag…</span> to type one. Separate several with commas.</li>
+            <li>Tap a tag to remove it. Touch and hold a tag to change its kind.</li>
+            <li>Recipes imported from websites bring the site's category, cuisine and diet with them. Tags you already use are added straight away. New ones appear as <span class="ui">Suggested tags</span>: tap one to keep it, or tap <span class="ui">Dismiss</span>.</li>
+          </ul>
+          <h3>Filter the list by tag</h3>
+          <p>The row of tags above the recipe list filters it. Pick one or more tags to see only recipes that have all of them, and tap <span class="ui">All</span> to clear the filter. Once you have more than eight tags, your pinned tags show first and the rest are grouped into a menu for each kind.</p>
+          <h3>Manage tags</h3>
+          <p><span class="ui">Settings › Tags</span> lists every tag by kind, with how many recipes use it. From there you can rename, merge, change kind, pin or delete a tag, and the change applies to every recipe. Pins are kept on each device separately.</p>
+        </div>
+        <div class="shots" style="flex-direction:column">
+          <figure class="shot phone"><div class="frame"><span><b>17</b>Recipe page tags with suggestions</span></div></figure>
+          <figure class="shot phone"><div class="frame"><span><b>18</b>Tag filter row above the list</span></div></figure>
+          <figure class="shot phone"><div class="frame"><span><b>19</b>Settings › Tags</span></div></figure>
+        </div>
+      </div>
+    </section>
+
     <section id="recipe">
       <div class="head"><span class="eyebrow">Day to day</span><h2>The recipe page</h2></div>
       <div class="split">
         <div>
-          <p>Open any recipe to see its photo, ingredients and then the instructions. The buttons along the top, from left to right:</p>
+          <p>Open any recipe to see its photo, then its servings and times, its tags, the ingredients and the instructions. Recipes imported from websites bring their servings and prep, cook and total times with them. The buttons along the top, from left to right:</p>
           <ul>
             <li><strong>Cart</strong> adds ingredients to your Forage List. A picker opens with every ingredient selected. Untick what you already have and tap the <span class="ui">Add Items to Forage List</span> button, which shows how many you picked.</li>
             <li><strong>Share</strong> sends the recipe's link to Messages, Notes or anywhere else.</li>
@@ -384,7 +419,7 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
       <div class="head"><span class="eyebrow">Bigger screens</span><h2>iPad, Mac and foldables</h2></div>
       <div class="split wide">
         <div>
-          <p><strong>iPad.</strong> The tabs move to the top, the recipe list sits beside the open recipe, and wide recipe pages show ingredients and steps side by side. Cook mode puts ingredients in a side panel in landscape.</p>
+          <p><strong>iPad.</strong> The tabs move to the top, the recipe list sits beside the open recipe, and wide recipe pages show ingredients and steps side by side. Cook mode puts ingredients in a side panel in landscape. You can also drag a link from Safari, text from Notes, or photos onto the app to import a recipe, and open more than one window.</p>
           <p><strong>Mac.</strong> The Mac app looks like the iPad app and adds menus and keyboard shortcuts: <kbd>⌘N</kbd> for a new recipe, <kbd>⌘,</kbd> for Settings, arrow keys to move between steps in cook mode. On the Mac, Cook goes straight to cook mode, and timers use a regular notification.</p>
           <p><strong>Foldable iPhone.</strong> When unfolded, the list and the recipe (or the Forage List) can sit side by side.</p>
         </div>
@@ -426,6 +461,7 @@ footer { margin-top: 24px; font-size: .85rem; color: var(--muted); border-top: 1
         <li><input type="checkbox" id="t6"><label for="t6">Cook something with cook mode and a step timer. Did the timer go off when you expected?</label></li>
         <li><input type="checkbox" id="t7"><label for="t7">Change the servings. Do the new amounts make sense?</label></li>
         <li><input type="checkbox" id="t8"><label for="t8">If you have a second device, check your recipes and list show up there too.</label></li>
+        <li><input type="checkbox" id="t10"><label for="t10">Tag a few recipes, then use the tag row to filter the list. Try Large Photos too.</label></li>
         <li><input type="checkbox" id="t9"><label for="t9">Try the widget and a Siri phrase.</label></li>
       </ol>
     </section>
